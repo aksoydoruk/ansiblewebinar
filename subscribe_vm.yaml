@@ -1,0 +1,16 @@
+- name: Configure VM  Playbook
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Subscribe VM to RED HAT Satellite
+      redhat_subscription:
+        state: present
+        activationkey: RHELDEV
+        org_id: Default_Organization
+
+    - name: Wait for Red Hat Satellite Subcription
+      wait_for:
+       timeout: 20
+
+#    - name: Add RHEL7 Repo to VM
+#      shell: subscription-manager repos --enable=rhel-7-server-rpms

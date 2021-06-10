@@ -1,0 +1,18 @@
+- name: Remove from Satellite  Playbook
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Change Host to Unmanaged on Red  Hat Satellite Server
+      shell: hammer host update --name {{ vmname }}.konsalt.info   --managed false
+#master_ign_file: "{{ cluster_name }}/master.ign"
+    - name: Wait for Red Hat Satellite Unmanage Process
+      wait_for:
+       timeout: 10
+    
+    - name: Remove Host From Red Hat Satellite Inventory
+      shell: hammer host delete --name {{ vmname }}.konsalt.info
+ 
+    - name: Wait for Red Hat Satellite Remove Process
+      wait_for:
+       timeout: 10
+    

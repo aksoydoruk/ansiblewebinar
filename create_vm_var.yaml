@@ -1,0 +1,35 @@
+- name:  Create New Virtual Machine
+  hosts: localhost
+  gather_facts: no
+#  vars:
+#    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Connect Vcenter and Create Virtual Machine
+      vmware_guest:
+        hostname: '{{ lookup("env", "VMWARE_HOST") }}'
+        username: '{{ lookup("env", "VMWARE_USER") }}'
+        password: '{{ lookup("env", "VMWARE_PASSWORD") }}'
+        validate_certs: False
+        datacenter: ""
+        datastore: 
+        state: poweredon
+        folder: /Ansible
+        template: ""
+        name: "{{ vmname }}"
+        cluster: ""
+        annotation:
+        networks:
+        - name: "VM Network"
+          start_connected: True
+          ip: "{{ vmip }}"
+          netmask: ""
+          gateway: ""
+          wait_for_ip_address: True
+        customization:
+          domain: ""
+          dns_servers:
+            - 
+      delegate_to: localhost
+    - name: Wait For IP
+      wait_for_connection:
+        delay: 60

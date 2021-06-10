@@ -1,0 +1,15 @@
+- name: POWEROFF  VM 
+  hosts: localhost
+  gather_facts: yes
+#    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Poweroff VM
+      vmware_guest:
+        hostname: '{{ lookup("env", "VMWARE_HOST") }}'
+        username: '{{ lookup("env", "VMWARE_USER") }}' 
+        password: '{{ lookup("env", "VMWARE_PASSWORD") }}'
+        validate_certs: False
+        datacenter: "KonsaltDC"
+        state: poweredoff
+        folder: /Ansible
+        name: "{{ vmname }}"

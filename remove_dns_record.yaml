@@ -1,0 +1,30 @@
+---
+- name: playbook that creates static DNS static records, both A and PTR, through the windows utility box
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+  - add_host:
+      group: s001net1
+      name: "s001net1.konsalt.info"
+      ansible_connection: winrm
+      ansible_winrm_server_cert_validation: ignore
+      ansible_user: '{{ lookup("env", "ansible_user") }}' 
+      ansible_ssh_pass: '{{ lookup("env", "ansible_password") }}' 
+#      ansible_port: "5985"
+#      ansible_port: "5986"
+      ansible_win_rm_scheme: https
+#      ansible_winrm_transport: ntlm
+    changed_when: false
+    no_log: false
+  
+
+  - set_fact:
+      ansible_winrm_server_cert_validation: ignore
+
+  - name: make static a and ptr records, ad
+    win_shell: Remove-DnsServerResourceRecord  -ComputerName s001net1.konsalt.info -ZoneName "konsalt.info" -RRType "A" -Name "rhel1" -RecordData "192.168.3.170" -Force 
+    become: yes
+    become_method: runas
+    become_user: doruk.aksoy 
+    delegate_to: s001net1.konsalt.info

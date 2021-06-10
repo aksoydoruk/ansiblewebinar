@@ -1,0 +1,17 @@
+- name: cloning VM from a template
+  hosts: localhost
+  gather_facts: yes
+  vars:
+#    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Delete VM Snapshot
+      vmware_guest_napshot:
+        hostname: ""
+        username: ""
+        password: ""
+        validate_certs: False
+        datacenter: ""
+        state: remove_all
+        folder: /Ansible
+        name: "{{ vmname }}"
+      delegate_to: localhost

@@ -1,0 +1,7 @@
+- name: My task
+  hosts: all
+  tasks:
+     - name: Install Httpd
+       yum:
+         name: httpd
+         state: latest

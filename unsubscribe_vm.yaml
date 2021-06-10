@@ -1,0 +1,14 @@
+- name: Remove Subscription Playbook
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Unsubscribe VM to RED HAT Satellite
+      redhat_subscription:
+        state: absent
+    #    activationkey: RHELDEV
+     #   org_id: Default_Organization
+
+    - name: Wait for Red Hat Satellite Subcription
+      wait_for:
+       timeout: 20
+

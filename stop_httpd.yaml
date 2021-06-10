@@ -1,0 +1,22 @@
+- name: Install HTTPD  Playbook
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Customize Http
+    copy:
+        src: files/index.html
+        dest: /var/www/html
+  - name: ensure httpd is Stopped & Disabled
+    service:
+      name: httpd
+      enabled: no
+      state: stopped
+  - name: Open port 80 for http access
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+  - name: Restart the firewalld service to load in the firewall changes
+    service:
+      name: firewalld
+      state: restarted
