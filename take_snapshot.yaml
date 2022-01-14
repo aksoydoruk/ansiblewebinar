@@ -6,9 +6,9 @@
   tasks:
     - name: Create VM Snapshot by Ansible Tower
       vmware_guest_snapshot:
-        hostname: "xxxxxx"
-        username: "xxxxxx"
-        password: "xxxxxx"
+        hostname: '{{ lookup("env", "VMWARE_HOST") }}'
+        username: '{{ lookup("env", "VMWARE_USER") }}' 
+        password: '{{ lookup("env", "VMWARE_PASSWORD") }}'
         validate_certs: False
         datacenter: "Konsalt-MESA"
         state: present
