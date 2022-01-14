@@ -10,7 +10,7 @@
         username: "xxxxxx"
         password: "xxxxxx"
         validate_certs: False
-        datacenter: "KonsaltDC"
+        datacenter: "Konsalt-MESA"
         state: present
         folder: /Ansible
         name: "{{ vmname }}"
