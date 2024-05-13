@@ -9,7 +9,7 @@
         username: '{{ lookup("env", "VMWARE_USER") }}' 
         password: '{{ lookup("env", "VMWARE_PASSWORD") }}'
         validate_certs: False
-        datacenter: "KonsaltDC"
+        datacenter: "DATACENTER"
         state: poweredoff
-        folder: /Ansible
+        folder: /DorukAksoy/Ansible
         name: "{{ vmname }}"
